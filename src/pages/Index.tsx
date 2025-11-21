@@ -1,6 +1,8 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
+import { Slider } from '@/components/ui/slider';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import Icon from '@/components/ui/icon';
 
 const Index = () => {
@@ -97,9 +99,35 @@ const Index = () => {
   const [selectedCategory, setSelectedCategory] = useState('Все категории');
   const categories = ['Все категории', 'Малые компрессоры', 'Средние компрессоры', 'Крупные компрессоры'];
 
-  const filteredProducts = selectedCategory === 'Все категории' 
-    ? products 
-    : products.filter(p => p.category === selectedCategory);
+  const [powerRange, setPowerRange] = useState([0, 60]);
+  const [pressureRange, setPressureRange] = useState([0, 15]);
+  const [performanceRange, setPerformanceRange] = useState([0, 12]);
+  const [sortBy, setSortBy] = useState('default');
+
+  const filteredProducts = useMemo(() => {
+    const filtered = products.filter(p => {
+      const categoryMatch = selectedCategory === 'Все категории' || p.category === selectedCategory;
+      const powerMatch = p.power >= powerRange[0] && p.power <= powerRange[1];
+      const pressureMatch = p.pressure >= pressureRange[0] && p.pressure <= pressureRange[1];
+      const performanceMatch = p.performance >= performanceRange[0] && p.performance <= performanceRange[1];
+      return categoryMatch && powerMatch && pressureMatch && performanceMatch;
+    });
+
+    if (sortBy === 'power-asc') filtered.sort((a, b) => a.power - b.power);
+    if (sortBy === 'power-desc') filtered.sort((a, b) => b.power - a.power);
+    if (sortBy === 'performance-asc') filtered.sort((a, b) => a.performance - b.performance);
+    if (sortBy === 'performance-desc') filtered.sort((a, b) => b.performance - a.performance);
+
+    return filtered;
+  }, [selectedCategory, powerRange, pressureRange, performanceRange, sortBy]);
+
+  const resetFilters = () => {
+    setSelectedCategory('Все категории');
+    setPowerRange([0, 60]);
+    setPressureRange([0, 15]);
+    setPerformanceRange([0, 12]);
+    setSortBy('default');
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -178,20 +206,101 @@ const Index = () => {
               </p>
             </div>
 
-            <div className="flex flex-wrap gap-3 justify-center mb-12">
-              {categories.map((cat) => (
-                <Button
-                  key={cat}
-                  variant={selectedCategory === cat ? 'default' : 'outline'}
-                  onClick={() => setSelectedCategory(cat)}
-                  className="transition-all"
-                >
-                  {cat}
-                </Button>
-              ))}
-            </div>
+            <div className="grid lg:grid-cols-4 gap-8 mb-8">
+              <Card className="lg:col-span-1 p-6 space-y-6 h-fit sticky top-20">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-lg font-bold text-secondary">Фильтры</h3>
+                  <Button variant="ghost" size="sm" onClick={resetFilters}>
+                    <Icon name="RotateCcw" size={16} />
+                  </Button>
+                </div>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-2 gap-8">
+                <div className="space-y-6">
+                  <div>
+                    <label className="text-sm font-medium mb-3 block">Категория</label>
+                    <div className="flex flex-col gap-2">
+                      {categories.map((cat) => (
+                        <Button
+                          key={cat}
+                          variant={selectedCategory === cat ? 'default' : 'outline'}
+                          onClick={() => setSelectedCategory(cat)}
+                          size="sm"
+                          className="justify-start"
+                        >
+                          {cat}
+                        </Button>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="text-sm font-medium mb-3 block">
+                      Мощность: {powerRange[0]} - {powerRange[1]} кВт
+                    </label>
+                    <Slider
+                      value={powerRange}
+                      onValueChange={setPowerRange}
+                      min={0}
+                      max={60}
+                      step={5}
+                      className="mb-2"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="text-sm font-medium mb-3 block">
+                      Давление: {pressureRange[0]} - {pressureRange[1]} бар
+                    </label>
+                    <Slider
+                      value={pressureRange}
+                      onValueChange={setPressureRange}
+                      min={0}
+                      max={15}
+                      step={1}
+                      className="mb-2"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="text-sm font-medium mb-3 block">
+                      Производительность: {performanceRange[0]} - {performanceRange[1]} м³/мин
+                    </label>
+                    <Slider
+                      value={performanceRange}
+                      onValueChange={setPerformanceRange}
+                      min={0}
+                      max={12}
+                      step={0.5}
+                      className="mb-2"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="text-sm font-medium mb-3 block">Сортировка</label>
+                    <Select value={sortBy} onValueChange={setSortBy}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="По умолчанию" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="default">По умолчанию</SelectItem>
+                        <SelectItem value="power-asc">Мощность: возрастание</SelectItem>
+                        <SelectItem value="power-desc">Мощность: убывание</SelectItem>
+                        <SelectItem value="performance-asc">Производительность: возрастание</SelectItem>
+                        <SelectItem value="performance-desc">Производительность: убывание</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+              </Card>
+
+              <div className="lg:col-span-3 space-y-6">
+                <div className="flex items-center justify-between">
+                  <div className="text-lg">
+                    Найдено <span className="font-bold text-primary">{filteredProducts.length}</span> моделей
+                  </div>
+                </div>
+
+                <div className="grid md:grid-cols-2 gap-6">
               {filteredProducts.map((product) => (
                 <Card key={product.id} className="overflow-hidden hover:shadow-xl transition-shadow">
                   <div className="grid md:grid-cols-2 gap-6 p-6">
@@ -241,6 +350,19 @@ const Index = () => {
                   </div>
                 </Card>
               ))}
+                </div>
+
+                {filteredProducts.length === 0 && (
+                  <div className="text-center py-16">
+                    <Icon name="Search" size={48} className="text-muted-foreground mx-auto mb-4" />
+                    <h3 className="text-xl font-bold text-secondary mb-2">Ничего не найдено</h3>
+                    <p className="text-muted-foreground mb-4">Попробуйте изменить параметры фильтров</p>
+                    <Button onClick={resetFilters} variant="outline">
+                      Сбросить фильтры
+                    </Button>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </section>
