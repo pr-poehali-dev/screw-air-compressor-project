@@ -477,6 +477,167 @@ const Index = () => {
         </>
       )}
 
+      {activeSection === 'about' && (
+        <section className="py-16 bg-background">
+          <div className="container mx-auto px-4">
+            <div className="text-center mb-16">
+              <h2 className="text-3xl md:text-5xl font-bold text-secondary mb-4">
+                О компании AirTech
+              </h2>
+              <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+                Более 19 лет опыта в производстве и поставке промышленных компрессоров
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-12 items-center mb-20">
+              <div className="space-y-6">
+                <div className="space-y-4">
+                  <div className="flex items-start gap-4">
+                    <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                      <Icon name="Building2" size={24} className="text-primary" />
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-bold text-secondary mb-2">История компании</h3>
+                      <p className="text-muted-foreground">
+                        Основана в 2005 году группой инженеров с опытом работы в европейских компаниях. 
+                        За годы работы мы стали одним из ведущих поставщиков компрессорного оборудования в России.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-4">
+                    <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                      <Icon name="Target" size={24} className="text-primary" />
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-bold text-secondary mb-2">Наша миссия</h3>
+                      <p className="text-muted-foreground">
+                        Предоставлять надёжное энергоэффективное оборудование, которое помогает предприятиям 
+                        снижать затраты и повышать производительность.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-4">
+                    <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                      <Icon name="Award" size={24} className="text-primary" />
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-bold text-secondary mb-2">Качество и надёжность</h3>
+                      <p className="text-muted-foreground">
+                        Все компрессоры проходят многоступенчатый контроль качества. Используем только 
+                        европейские комплектующие от проверенных производителей.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="relative">
+                <img
+                  src="https://cdn.poehali.dev/projects/5fb53085-d1b9-413d-aa78-f7396a02c28b/files/aad4d572-5c9d-4dba-8871-467519f8ed8e.jpg"
+                  alt="Производство AirTech"
+                  className="rounded-lg shadow-2xl w-full"
+                />
+              </div>
+            </div>
+
+            <div className="grid md:grid-cols-4 gap-8 mb-20">
+              <Card className="p-6 text-center hover:shadow-lg transition-shadow">
+                <div className="text-4xl font-bold text-primary mb-2">19+</div>
+                <div className="text-muted-foreground">лет на рынке</div>
+              </Card>
+              <Card className="p-6 text-center hover:shadow-lg transition-shadow">
+                <div className="text-4xl font-bold text-primary mb-2">2500+</div>
+                <div className="text-muted-foreground">установленных систем</div>
+              </Card>
+              <Card className="p-6 text-center hover:shadow-lg transition-shadow">
+                <div className="text-4xl font-bold text-primary mb-2">98%</div>
+                <div className="text-muted-foreground">довольных клиентов</div>
+              </Card>
+              <Card className="p-6 text-center hover:shadow-lg transition-shadow">
+                <div className="text-4xl font-bold text-primary mb-2">24/7</div>
+                <div className="text-muted-foreground">техническая поддержка</div>
+              </Card>
+            </div>
+
+            <div className="space-y-8">
+              <div className="text-center">
+                <h3 className="text-2xl md:text-3xl font-bold text-secondary mb-4">
+                  Сертификаты и достижения
+                </h3>
+                <p className="text-muted-foreground max-w-2xl mx-auto">
+                  Наша продукция сертифицирована и соответствует международным стандартам качества
+                </p>
+              </div>
+
+              <div className="grid md:grid-cols-3 gap-6">
+                <Card className="p-6 hover:shadow-lg transition-shadow">
+                  <div className="flex flex-col items-center text-center space-y-4">
+                    <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center">
+                      <Icon name="BadgeCheck" size={32} className="text-primary" />
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-lg text-secondary mb-2">ISO 9001:2015</h4>
+                      <p className="text-sm text-muted-foreground">
+                        Сертификат системы менеджмента качества
+                      </p>
+                    </div>
+                  </div>
+                </Card>
+
+                <Card className="p-6 hover:shadow-lg transition-shadow">
+                  <div className="flex flex-col items-center text-center space-y-4">
+                    <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center">
+                      <Icon name="ShieldCheck" size={32} className="text-primary" />
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-lg text-secondary mb-2">CE Marking</h4>
+                      <p className="text-sm text-muted-foreground">
+                        Соответствие европейским стандартам безопасности
+                      </p>
+                    </div>
+                  </div>
+                </Card>
+
+                <Card className="p-6 hover:shadow-lg transition-shadow">
+                  <div className="flex flex-col items-center text-center space-y-4">
+                    <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center">
+                      <Icon name="Leaf" size={32} className="text-primary" />
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-lg text-secondary mb-2">EAC</h4>
+                      <p className="text-sm text-muted-foreground">
+                        Сертификат Евразийского экономического союза
+                      </p>
+                    </div>
+                  </div>
+                </Card>
+              </div>
+            </div>
+
+            <div className="mt-16 bg-gradient-to-br from-primary/10 to-accent/10 rounded-lg p-8 md:p-12">
+              <div className="text-center space-y-6">
+                <h3 className="text-2xl md:text-3xl font-bold text-secondary">
+                  Присоединяйтесь к нашим клиентам
+                </h3>
+                <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                  Нам доверяют крупнейшие предприятия России в различных отраслях промышленности
+                </p>
+                <div className="flex flex-wrap gap-4 justify-center">
+                  <Button size="lg" className="bg-primary hover:bg-primary/90">
+                    Связаться с нами
+                  </Button>
+                  <Button size="lg" variant="outline">
+                    Скачать презентацию
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
+
       <footer className="bg-secondary text-white py-12">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-4 gap-8">
